@@ -30,18 +30,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # GHCR image references must be lowercase; the repository owner can
+      # contain uppercase characters, so normalise it here.
+      - name: Compute lowercase image name
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.event.workflow_run.head_sha }}
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.event.workflow_run.head_sha }}
 
       - name: Smoke-test the published image
         run: |
-          IMAGE=ghcr.io/${{ github.repository }}:${{ github.event.workflow_run.head_sha }}
+          IMAGE=${{ env.IMAGE }}:${{ github.event.workflow_run.head_sha }}
           docker run -d --name news2 -p 8000:8000 "$IMAGE"
           for i in $(seq 1 10); do
             if curl -fs http://localhost:8000/health; then
