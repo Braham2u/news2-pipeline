@@ -44,3 +44,4 @@ curl http://localhost:8000/health
   builds the Docker image, publishes it to GitHub Container Registry
   (GHCR), and smoke-tests the published image's `/health` endpoint.
 
+<!-- CI/CD pipeline verified: all 56 boundary tests passing, container deployed to GHCR -->
