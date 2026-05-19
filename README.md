@@ -43,3 +43,5 @@ curl http://localhost:8000/health
 - **CD** (`.github/workflows/cd.yml`): on a successful CI run on `main`,
   builds the Docker image, publishes it to GitHub Container Registry
   (GHCR), and smoke-tests the published image's `/health` endpoint.
+
+<!-- practice run: testing the CI/CD popeline -->
