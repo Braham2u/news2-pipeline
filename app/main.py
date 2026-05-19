@@ -18,7 +18,7 @@ app = FastAPI(
         "Computes the National Early Warning Score 2 (Royal College of "
         "Physicians, 2017) from patient vital signs."
     ),
-    version="1.0.0",
+    version="1.0.1",
 )
 
 
